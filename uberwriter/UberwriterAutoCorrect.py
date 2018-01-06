@@ -4,18 +4,11 @@
 # import presage
 from gi.repository import Gtk, Gdk
 
-import uberwriter_lib.pressagio as pressagio
 import enchant
 
 
 # d = enchant.Dict("de_DE")
 import re
-
-import uberwriter_lib.pressagio.predictor
-import uberwriter_lib.pressagio.tokenizer
-import uberwriter_lib.pressagio.dbconnector
-import uberwriter_lib.pressagio.context_tracker
-import uberwriter_lib.pressagio.callback
 
 import xml.etree.ElementTree as ET
 import pickle
@@ -26,17 +19,6 @@ import configparser
 from uberwriter_lib.helpers import get_media_path
 
 # Define and create PresageCallback object
-
-class PressagioCallback(pressagio.callback.Callback):
-    def __init__(self, buffer):
-        super().__init__()
-        self.buffer = buffer
-
-    def past_stream(self):
-        return self.buffer
-    
-    def future_stream(self):
-        return ''
 
 class UberwriterAutoCorrect:
 
@@ -82,8 +64,6 @@ class UberwriterAutoCorrect:
         self.callback.buffer = ' '.join(context) + ' ' + stump
         self.callback.buffer = self.callback.buffer.lstrip().rstrip()
         predictions = []
-        if self.use_pressagio:
-            predictions = self.prsgio.predict(6, None)
         prediction = None
         if not len(predictions):
             if self.enchant_dict.check(stump):
@@ -184,13 +164,9 @@ class UberwriterAutoCorrect:
         else:
             self.language = language
             print("Language changing")
-            config_file = get_media_path("pressagio_config.ini")
             pres_config = configparser.ConfigParser()
             pres_config.read(config_file)
             pres_config.set("Database", "database", get_media_path("corpora/" + self.language + ".sqlite"))
-            self.context_tracker = pressagio.context_tracker.ContextTracker(
-                pres_config, self.predictor_registry, self.callback)
-            self.prsgio = self.predictor_registry[0]
 
             self.enchant_dict = enchant.Dict(self.language)
 
@@ -207,14 +183,3 @@ class UberwriterAutoCorrect:
         self.get_frequency_dict(self.language)
         self.enchant_dict = enchant.Dict(self.language)
         
-        self.use_pressagio = False
-        config_file = get_media_path("pressagio_config.ini")
-        pres_config = configparser.ConfigParser()
-        pres_config.read(config_file)
-        pres_config.set("Database", "database", get_media_path("corpora/" + self.language + ".sqlite"))
-        self.callback = PressagioCallback("")
-
-        self.predictor_registry = pressagio.predictor.PredictorRegistry(pres_config)
-        self.context_tracker = pressagio.context_tracker.ContextTracker(
-            pres_config, self.predictor_registry, self.callback)
-        self.prsgio = self.predictor_registry[0]

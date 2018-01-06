@@ -16,7 +16,6 @@
   bind "<ctl>p" { "toggle-preview" () };
   bind "<ctl>w" { "close-window" () };
   bind "<ctl>f" { "toggle-search" () };
-  bind "<ctl><shift>b" { "toggle-bibtex" () };
   bind "<ctl><shift>r" { "toggle-search-replace" () };
   bind "<ctl><shift>f" { "toggle-search-replace" () };
   bind "F11" { "toggle-fullscreen" () };

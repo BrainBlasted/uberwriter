@@ -16,6 +16,10 @@
           <object class="GtkSearchEntry" id="searchentry1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="margin_left">3</property>
+            <property name="margin_right">3</property>
+            <property name="margin_top">3</property>
+            <property name="margin_bottom">3</property>
             <property name="primary_icon_name">edit-find-symbolic</property>
             <property name="primary_icon_activatable">False</property>
             <property name="primary_icon_sensitive">False</property>

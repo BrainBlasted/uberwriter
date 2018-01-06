@@ -55,14 +55,13 @@ def get_data_path():
     """
 
     # Get pathname absolute or relative.
-    path = os.path.join(
-        os.path.dirname(__file__), __uberwriter_data_directory__)
+    path = os.path.join('/app/opt/uberwriter/data/')
 
-    abs_data_path = os.path.abspath(path)
-    if not os.path.exists(abs_data_path):
-        raise project_path_not_found
+    # abs_data_path = os.path.abspath(path)
+    # if not os.path.exists(abs_data_path):
+    #     raise project_path_not_found
 
-    return abs_data_path
+    return path
 
 
 def get_version():

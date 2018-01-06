@@ -1,0 +1,69 @@
+{
+  "app-id": "de.wolfvollprecht.UberWriter",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "3.26",
+  "sdk": "org.gnome.Sdk",
+  "command": "uberwriter",
+  "finish-args": [
+     "--socket=x11"
+  ],
+  "build-options" : {
+    "env": {
+      "PYTHON": "python3"
+    }
+  },
+  "modules": [
+    {
+      "name": "uberwriter",
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://github.com/wolfv/uberwriter",
+          "branch": "flatpak"
+        }
+      ]
+    },
+    {
+      "name": "pyenchant",
+      "build-options" : {
+        "build-args": ["--share=network"]
+      },
+      "config-opts": ["--module=pyenchant"],
+      "sources": [
+        {
+            "type": "file",
+            "path": "pip-download",
+            "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "regex",
+      "build-options" : {
+        "build-args": ["--share=network"]
+      },
+      "config-opts": ["--module=regex"],
+      "sources": [
+        {
+            "type": "file",
+            "path": "pip-download",
+            "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "python-Levenshtein",
+      "build-options" : {
+        "build-args": ["--share=network"]
+      },
+      "config-opts": ["--module=python-Levenshtein"],
+      "sources": [
+        {
+            "type": "file",
+            "path": "pip-download",
+            "dest-filename": "configure"
+        }
+      ]
+    }
+  ]
+}
